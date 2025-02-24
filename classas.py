@@ -10,9 +10,6 @@ hooman_umbrella = pygame.image.load('hooman_umbrella.png').convert_alpha()
 cloud_image = pygame.transform.scale(cloud_image_unscaled, (cloud_image_unscaled.get_width()*0.5, cloud_image_unscaled.get_height()*0.5))
 
 class Rain:
-    def __init__(self):
-        self.x = random.randint(0, 1700)
-        self.y = -5
 
 
     def draw(self):
@@ -25,7 +22,7 @@ class Rain:
 
 class Cloud:
     def __init__(self):
-        self.x = random.randint(0, 1700-cloud_image.get_width())
+        self.x = random.randint(0, 1700 - cloud_image.get_width())
         self.y = random.randint(0, 100)
 
     def draw(self):
@@ -47,22 +44,18 @@ while True:
             sys.exit()
 
     screen.fill((150, 150,150))
-    rain.append(Rain())
     for R in rain:
         R.draw()
         R.move()
 
     if pressed_key[pygame.K_RIGHT] and xpos <= 1700 - hooman_image.get_width():
-        xpos += 0.3
     if pressed_key[pygame.K_LEFT] and xpos >= 0:
-        xpos -= 0.3
     # if pressed_key[pygame.K_UP]:
     #     ypos -= 0.3
     # if pressed_key[pygame.K_DOWN]:
     #     ypos += 0.3
 
     #screen.blit(cloud_image, (200, 200))
-    screen.blit(hooman_image, (xpos, screen.get_height() - hooman_image.get_height()))
     pretty_cloud.draw()
     pretty_cloud.move()
 
