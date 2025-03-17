@@ -1,4 +1,4 @@
-import pygame, sys, random
+import pygame, sys, random, time
 
 pygame.init()
 pygame.display.set_caption("My first PyGame program")
@@ -11,7 +11,12 @@ hooman_image.set_colorkey((255, 255, 255))
 hooman_umbrella = pygame.image.load('hooman_umbrella.png').convert_alpha()
 cloud_image = pygame.transform.scale(cloud_image_unscaled,
                                      (cloud_image_unscaled.get_width() * 0.5, cloud_image_unscaled.get_height() * 0.5))
+umbrella_height = hooman_image.get_height()
+umbrella_width = hooman_umbrella.get_width()
+resized_umbrella = pygame.transform.scale(hooman_umbrella,(umbrella_width, umbrella_height))
 
+
+print(time.time())
 
 class Rain:
     def __init__(self, cloud_x, cloud_y, cloud_width):
@@ -25,10 +30,7 @@ class Rain:
         self.y += random.randint(1, 2)
 
     def check_collision(self, human):
-        if (self.x > human.x and self.x < human.x + hooman_image.get_width() and
-                self.y > human.y and self.y < human.y + hooman_image.get_height()):
-            return True
-        return False
+        return pygame.Rect(human.x, human.y, hooman_image.get_width(), hooman_image.get_height()).collidepoint(self.x, self.y)
 
 
 class Cloud:
@@ -53,9 +55,7 @@ class James:
         screen.blit(hooman_image, (self.x, self.y))  # Draw the human
 
         if self.umbrella_open:
-            umbrella_height = hooman_image.get_height()
-            umbrella_width = hooman_umbrella.get_width()
-            resized_umbrella = pygame.transform.scale(hooman_umbrella,(umbrella_width, umbrella_height))
+
 
             # Draw the resized umbrella at the same position as the human (no offset)
             screen.blit(resized_umbrella, (self.x, self.y))
@@ -75,6 +75,9 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        if event.type == pygame.KEYDOWN: and event.key == pygame.K_SPACE:
+
+
 
     screen.fill((150, 150, 150))
     rain.append(Rain(pretty_cloud.x, pretty_cloud.y, cloud_image.get_width()))
@@ -87,7 +90,9 @@ while True:
         if R.check_collision(jamie):
 
             jamie.umbrella_open = True
-        elif R.y > screen.get_height():
+        else:
+            jamie.umbrella_open = False
+        if R.y > screen.get_height():
 
             rain.remove(R)
 
