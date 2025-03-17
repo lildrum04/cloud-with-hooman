@@ -95,7 +95,7 @@ while True:
     if all(not R.check_collision(jamie) for R in rain):
         jamie.umbrella_open = False
 
-   
+
     if pressed_key[pygame.K_RIGHT] and xpos <= 1700 - hooman_image.get_width():
         xpos += 2  # Move right
     if pressed_key[pygame.K_LEFT] and xpos >= 0:
